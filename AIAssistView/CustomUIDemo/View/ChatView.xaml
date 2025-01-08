@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CustomUIDemo"
+             xmlns:shimmer="clr-namespace:Syncfusion.Maui.Shimmer;assembly=Syncfusion.Maui.Core"
+             xmlns:buttons="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             x:Class="CustomUIDemo.ChatView">
+    <ContentView.Resources>
+        <local:InverseBoolConverter x:Key="InverseBoolConverter" />
+    </ContentView.Resources>
+    <Grid Padding="{OnPlatform Android='3',WinUI='10',iOS='3',MacCatalyst='10'}">
+        <Border StrokeThickness="{OnPlatform Android=0,WinUI=1,iOS=0,MacCatalyst=1}"
+                Background="White"
+                Padding="{OnPlatform Android='0',WinUI='20,10,0,0',iOS='0',MacCatalyst='20,10,0,0'}">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="10" />
+            </Border.StrokeShape>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0"
+                      ColumnDefinitions="Auto,*,Auto,Auto,Auto"
+                      Padding="5,0,5,0">
+                    <Border Grid.Column="0"
+                            StrokeThickness="1"
+                            HeightRequest="30"
+                            WidthRequest="30"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Start"
+                            Margin="0,5,10,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="5" />
+                        </Border.StrokeShape>
+                        <local:SfEffectsViewAdv HighlightBackground="#000000"
+                                                            RippleBackground="#000000">
+                            <Label x:Name="close"
+                               FontSize="15"
+                               Text="&#xE70B;"
+                               FontFamily="MauiMaterialAssets"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding CloseCommand}"
+                                                      CommandParameter="{Binding .}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </local:SfEffectsViewAdv>
+                    </Border>
+                    <Grid Grid.Column="1"
+                          BackgroundColor="White"
+                          VerticalOptions="Center"
+                          Padding="{OnPlatform Android='5,0,5,0', WinUI='0,0,5,0',iOS='5,0,5,0', MacCatalyst='0,0,5,0'}">
+                        <shimmer:SfShimmer IsActive="{Binding IsLoading}" Background="White">
+                            <shimmer:SfShimmer.CustomView>
+                                <Label FontSize="20"
+                                       VerticalOptions="Center"
+                                       Margin="0" />
+                            </shimmer:SfShimmer.CustomView>
+                        </shimmer:SfShimmer>
+                        <Label x:Name="Title"
+                               IsVisible="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}"
+                               Text="{Binding TitleText}"
+                               FontSize="16"
+                               Background="White"
+                               VerticalOptions="Center"
+                               Margin="0" />
+                    </Grid>
+                    <Border
+                        Grid.Column="2"
+                        StrokeThickness="1"
+                        HeightRequest="30"
+                        WidthRequest="30"
+                        Stroke="#C8C8C8"
+                        Background="White"
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        Margin="0,5,5,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="5" />
+                        </Border.StrokeShape>
+                        <local:SfEffectsViewAdv HighlightBackground="#000000"
+                                    RippleBackground="#000000">
+                            <Label x:Name="lblCopy"
+                                    Text="&#xE7A0;"
+                                    FontFamily="MauiMaterialAssets"
+                                    FontSize="15"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding CopyCommand}"
+                              CommandParameter="{Binding HtmlContent}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </local:SfEffectsViewAdv>
+                    </Border>
+
+                    <Border Grid.Column="3"
+                            StrokeThickness="1"
+                            HeightRequest="30"
+                            WidthRequest="30"
+                            Stroke="#C8C8C8"
+                            Background="White"
+                            VerticalOptions="Center"
+                            HorizontalOptions="End"
+                            Margin="0,5,5,0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="5" />
+                        </Border.StrokeShape>
+                        <local:SfEffectsViewAdv HighlightBackground="#000000"
+                             RippleBackground="#000000">
+                            <Label x:Name="lblRetry"
+                                Text="&#xE7A2;"
+                                FontFamily="MauiMaterialAssets"
+                                FontSize="15"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding RetryCommand}"
+                                                          CommandParameter="{Binding CurrentRequest}"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </local:SfEffectsViewAdv>
+                    </Border>
+                </Grid>
+                <ScrollView Grid.Row="1"
+                            Padding="{OnPlatform Android='5,20,30,20',WinUI='30,20,30,20',iOS='5,20,30,20',MacCatalyst='30,20,30,20'}">
+                    <Grid>
+                        <shimmer:SfShimmer IsActive="{Binding IsLoading}">
+                            <shimmer:SfShimmer.CustomView>
+                                <WebView>
+                                    <WebView.Source>
+                                        <HtmlWebViewSource Html="{Binding HtmlContent}" />
+                                    </WebView.Source>
+                                </WebView>
+                            </shimmer:SfShimmer.CustomView>
+                        </shimmer:SfShimmer>
+                        <WebView IsVisible="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}}">
+                            <WebView.Source>
+                                <HtmlWebViewSource Html="{Binding HtmlContent}" />
+                            </WebView.Source>
+                        </WebView>
+                    </Grid>
+                </ScrollView>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentView>

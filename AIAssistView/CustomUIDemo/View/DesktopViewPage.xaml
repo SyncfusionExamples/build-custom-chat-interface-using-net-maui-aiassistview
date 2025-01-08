@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.AIAssistView;assembly=Syncfusion.Maui.AIAssistView"
+             xmlns:shimmer="clr-namespace:Syncfusion.Maui.Shimmer;assembly=Syncfusion.Maui.Core"
+             xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+             xmlns:local="clr-namespace:CustomUIDemo"
+             x:Class="CustomUIDemo.DesktopViewPage"
+             Title="DesktopViewPage">
+    <ContentPage.BindingContext>
+        <local:ViewModel x:Name="viewModel" />
+    </ContentPage.BindingContext>
+    <!--<ContentPage.Resources>
+        <DataTemplate x:Key="editorTemplate">
+            <Border StrokeThickness="1" 
+                    Padding="0,0,10,0" 
+                    Background="#F7F2FB" 
+                    HeightRequest="88"  
+            Stroke="#CAC4D0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16" />
+                </Border.StrokeShape>
+                <Grid ColumnDefinitions="*,Auto" 
+                      Padding="{OnPlatform Android='12,12,0,0', Default='8,6,0,0'}" 
+                      Background="Transparent">
+                    <local:CustomStyleEditor x:Name="editor"
+                                 Background="#F7F2FB"
+                                 Placeholder="Type Message..."
+                                 PlaceholderColor="#49454F"
+                                 AutoSize="TextChanges"
+                                 MaximumHeightRequest="88"
+                                 TextColor="#49454F"
+                                 Text="{Binding Source={x:Reference sfAIAssistView}, Path=BindingContext.InputText}">
+                        <local:CustomStyleEditor.Behaviors>
+                            <local:EditorTextChangedBehavior/>
+                        </local:CustomStyleEditor.Behaviors>
+                    </local:CustomStyleEditor>
+                    <popup:SfPopup Grid.Column="1"
+                       AutoSizeMode="Both"
+                       RelativeView="{x:Reference attachmentButton}"
+                       RelativePosition="AlignTop"
+                       ShowHeader="False"
+                       IsOpen="{Binding IsAttachmentPopupOpen}">
+                        <popup:SfPopup.PopupStyle>
+                            <popup:PopupStyle CornerRadius="10"
+                                  HasShadow="True"
+                                  OverlayColor="Transparent" />
+                        </popup:SfPopup.PopupStyle>
+                        <popup:SfPopup.ContentTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="30,Auto"
+                          ColumnSpacing="5"
+                          Padding="10"
+                          HeightRequest="45"
+                          WidthRequest="220"
+                          HorizontalOptions="Center"
+                          VerticalOptions="Center"
+                          Background="#F7F2FB">
+                                    <Label Text="&#xe787;"
+                               FontFamily="MauiSampleFontIcon"
+                               FontSize="20"
+                               Grid.Column="0"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"
+                               TextColor="#49454F" />
+                                    <Label Text="Upload from computer"
+                               Grid.Column="1"
+                               FontSize="16"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"
+                               TextColor="#49454F"
+                               CharacterSpacing="0.15"
+                               FontFamily="Roboto-Regular" />
+                                </Grid>
+                            </DataTemplate>
+                        </popup:SfPopup.ContentTemplate>
+                    </popup:SfPopup>
+                    <Grid ColumnDefinitions="42,42"
+              Grid.Column="1"
+              Padding="8"
+              VerticalOptions="End">
+                        <Border x:Name="attachmentButton" 
+                                Stroke="Transparent"
+                    Grid.Column="0"
+                    HeightRequest="42" WidthRequest="42">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="21"/>
+                            </Border.StrokeShape>
+                            <local:SfEffectsViewAdv 
+                                HighlightBackground="#000000"
+                                RippleBackground="#000000">
+                                <local:SfEffectsViewAdv.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding AttachmentButtonCommand}"/>
+                                </local:SfEffectsViewAdv.GestureRecognizers>
+                                <Grid>
+                                    <Label Text="&#xe771;" 
+                                           FontFamily="MauiSampleFontIcon" 
+                                           FontSize="20" 
+                                           HorizontalTextAlignment="Center" 
+                                           VerticalTextAlignment="Center" 
+                                           TextColor="#49454F" />
+                                </Grid>
+                            </local:SfEffectsViewAdv >
+                        </Border>
+
+                        <Border x:Name="sendButton" Stroke="Transparent"
+                    Grid.Column="1"
+                    IsEnabled="{Binding EnableSendIcon}"
+                    HeightRequest="42" WidthRequest="42">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="21"/>
+                            </Border.StrokeShape>
+                            <local:SfEffectsViewAdv HighlightBackground="#000000"
+                                        RippleBackground="#000000">
+                                <local:SfEffectsViewAdv.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SendButtonCommand}"/>
+                                </local:SfEffectsViewAdv.GestureRecognizers>
+                                <Grid WidthRequest="42" HeightRequest="42">
+                                    <Label x:Name="sendIcon" Text="&#xE76F;" FontFamily="MauiSampleFontIcon" FontSize="20"
+                               HorizontalTextAlignment="Center" 
+                               VerticalTextAlignment="Center" Padding="5,0,0,0"
+                               HeightRequest="42" WidthRequest="42" >
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding EnableSendIcon}" Value="False">
+                                                <Setter Property="TextColor" Value="#611c1b1f"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding EnableSendIcon}" Value="True">
+                                                <Setter Property="TextColor" Value="#49454F"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                </Grid>
+                            </local:SfEffectsViewAdv >
+                        </Border>
+                    </Grid>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </ContentPage.Resources>-->
+    <local:CustomAssistView x:Name="sfAIAssistView"
+                            ShowHeader="{Binding IsHeaderVisible}"
+                            HeaderTemplate="{StaticResource headerTemplate}"
+                            AssistItems="{Binding AssistItems}"
+                            EditorViewTemplate="{StaticResource editorTemplate}"
+                            RequestCommand="{Binding AssistViewRequestCommand}"
+                            StopRespondingCommand="{Binding StopRespondingCommand}">
+        <local:CustomAssistView.ControlTemplate>
+            <ControlTemplate>
+                <ContentView BindingContext="{TemplateBinding BindingContext}">
+                    <ContentView.Content>
+                        <Grid Padding="0">
+                            <Grid.Resources>
+                                <local:BoolToGridLengthConverter x:Key="BoolToGridLengthConverter" />
+                                <local:BoolToGridLengthConverterInverse x:Key="BoolToGridLengthConverterInverse" />
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="{Binding IsResponseVisible, Converter={StaticResource BoolToGridLengthConverter}, FallbackValue=*}" />
+                                <ColumnDefinition Width="{Binding IsResponseVisible, Converter={StaticResource BoolToGridLengthConverterInverse}, FallbackValue=0}" />
+                            </Grid.ColumnDefinitions>
+                            <ContentView Content="{TemplateBinding AssistChatView}"
+                                         Margin="10,10,-10,10"
+                                         MaximumWidthRequest="650"
+                                         Grid.Column="0" />
+                            <local:ChatView IsVisible="{Binding IsResponseVisible}"
+                                            Margin="10,0,0,0"
+                                            BindingContext="{TemplateBinding BindingContext}"
+                                            Grid.Column="1" />
+                        </Grid>
+                    </ContentView.Content>
+                </ContentView>
+            </ControlTemplate>
+        </local:CustomAssistView.ControlTemplate>
+    </local:CustomAssistView>
+</ContentPage>

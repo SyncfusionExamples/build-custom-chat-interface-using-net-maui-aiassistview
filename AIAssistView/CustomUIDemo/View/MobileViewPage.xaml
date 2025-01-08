@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.AIAssistView;assembly=Syncfusion.Maui.AIAssistView"
+             xmlns:shimmer="clr-namespace:Syncfusion.Maui.Shimmer;assembly=Syncfusion.Maui.Core"
+             xmlns:local="clr-namespace:CustomUIDemo"
+             x:Class="CustomUIDemo.MobileViewPage"
+             Title="MobileViewPage">
+    <ContentPage.BindingContext>
+        <local:ViewModel x:Name="viewModel" />
+    </ContentPage.BindingContext>
+    <local:CustomAssistView ShowHeader="True"
+                            Padding="0,15,0,0"
+                            HeaderTemplate="{StaticResource headerTemplate}"
+                            EditorViewTemplate="{StaticResource editorTemplate}"
+                            AssistItems="{Binding AssistItems}"
+                            RequestCommand="{Binding AssistViewRequestCommand}"
+                            StopRespondingCommand="{Binding StopRespondingCommand}">
+        <local:CustomAssistView.ControlTemplate>
+            <ControlTemplate>
+                <ContentView BindingContext="{TemplateBinding BindingContext}">
+                    <ContentView.Content>
+                        <Grid Padding="0">
+                            <Grid.Resources>
+                                <local:InverseBoolConverter x:Key="InverseBoolConverter" />
+                            </Grid.Resources>
+                            <ContentView Content="{TemplateBinding AssistChatView}"
+                                         Margin="10,10,8,10"
+                                         IsVisible="{Binding IsResponseVisible,Converter={x:StaticResource InverseBoolConverter}}"/>
+                            <local:ChatView IsVisible="{Binding IsResponseVisible}"
+                                            BindingContext="{TemplateBinding BindingContext}" />
+                        </Grid>
+                    </ContentView.Content>
+                </ContentView>
+            </ControlTemplate>
+        </local:CustomAssistView.ControlTemplate>
+    </local:CustomAssistView>
+</ContentPage>
