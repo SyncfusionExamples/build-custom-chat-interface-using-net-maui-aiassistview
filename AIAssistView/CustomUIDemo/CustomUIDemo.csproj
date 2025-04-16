@@ -60,7 +60,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Maui.Controls" Version="*" />
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="*" />
 		<PackageReference Include="Microsoft.SemanticKernel" Version="*" />
 		<PackageReference Include="Syncfusion.Maui.AIAssistView" Version="*" />
